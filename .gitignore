@@ -14,3 +14,7 @@
 # Maven
 log/
 target/
+
+# Extras
+/spring-app.db
+/.dbeaver-data-sources.xml
