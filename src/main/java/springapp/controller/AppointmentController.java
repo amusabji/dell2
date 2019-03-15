@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import springapp.command.ClientCommand;
+import springapp.domain.Appointment;
 import springapp.domain.Client;
+import springapp.service.AppointmentService;
 import springapp.service.ClientService;
 
 /**
@@ -27,15 +29,16 @@ import springapp.service.ClientService;
 @RequestMapping("/appointments") // notice that this path is set at the class level.
 public class AppointmentController {
 
-	// Inject in a ClientService claass
+	// Inject in a ClientService class
 	@Autowired
-	//AppointmentService appointmentService;
-	
+	AppointmentService appointmentService;
+
 	@PreAuthorize("hasAuthority('LIST_CLIENTS')")
 	@GetMapping
-	 public String listAppointments() {
-  
-       return "appointments/listAppointments";
-   }
+	public String listAppointments(Model model) {
+		List<Appointment> appointments = appointmentService.getAppointments();
+		model.addAttribute("appointments", appointments);
+		return "appointments/listAppointments";
+	}
 
 }

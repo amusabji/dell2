@@ -10,6 +10,28 @@
 			<center>
 			<p> This is the appointments page. WIP</p>
 			</center>
+			<table class="fullWidth pure-table pure-table-horizontal">
+				<thead>
+					<tr>
+						<th>Appointment Id</th>
+						<th>Client ID</th>
+						<th>Pet ID</th>
+						<th>Appt Date</th>
+						<th>Appt Time</th>
+						<th>Appt Type</th>
+					</tr>
+				</thead>
+				<tbody>	
+					<tr data-th-each="appointment : ${appointments}">
+						<td data-th-text="${appointment.id}">...</td>
+						<td data-th-text="${appointment.client_id}">...</td>
+						<td data-th-text="${appointment.pet_id}">...</td>
+						<td data-th-text="${appointment.appt_date}">...</td>
+						<td data-th-text="${appointment.appt_time}">...</td>
+						<td data-th-text="${appointment.appt_type}">...</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
     </div>
 </body>
