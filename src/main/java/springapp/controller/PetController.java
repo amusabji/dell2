@@ -77,9 +77,8 @@ public class PetController {
 						 @RequestParam(name="clientId", required=false) Integer clientId,
 						 @RequestParam(name="saved", required = false) boolean saved) {
 
-
 	    // we used this as flag so we can tell on the view template how we got here?
-        // if a client id wass passed in, then we got to this page from the client edit page.
+        // if a client id was passed in, then we got to this page from the client edit page.
         // other wise we got here from the list pets page
         // this information can be used to figure out what page we should exit to
 		model.addAttribute("fromClientPage", clientId != null);
@@ -103,6 +102,10 @@ public class PetController {
             Pet pet = petService.getPet(id);
             // and we generate our command from the pet instance the service returns
 			petCommand = new PetCommand(pet);
+			petCommand.setName(petCommand.getName());
+			petCommand.setGender(petCommand.getGender());
+			petCommand.setAltered(petCommand.isAltered());
+			 model.addAttribute("saved2", saved);
 		}
 
 		// the pet command should always have the clientid (unless the Pet instance from the service is missing an id)
@@ -114,8 +117,9 @@ public class PetController {
 		// we set the client instance in the pet command,
         // when we got the command earlier, we only had the clientid, but now we should have the full client object.
         // we do this because we want to display the client info (name) not just the id.
-		petCommand.setClient(client);			
-
+		petCommand.setClient(client);	
+	
+		
 		// we add the command pet command instance to the mode (which has the client instance as well as the pet info)
 		model.addAttribute("command", petCommand);
 		return "pets/editPet";
@@ -129,21 +133,23 @@ public class PetController {
      * @param fromClientPage a flag so we know if this originated from the client page, or the pet list page
      * @return the view template to use once the save is successful
      */
+
 	@PreAuthorize("hasAuthority('SAVE_PET')")
 	@PostMapping
 	 public String savePet(PetCommand command, RedirectAttributes redirectAttributes, boolean fromClientPage) {
 
-        // we pass in the pet command to the service to update or create a new pet
-        Pet pet = petService.savePet(command);
+	        // we pass in the pet command to the service to update or create a new pet
+	        Pet pet = petService.savePet(command);
+	        
+	        String pid = pet.getClientId().toString();
 
+	        redirectAttributes.addAttribute("saved", true);
+	        if(fromClientPage) {
+	            redirectAttributes.addAttribute("clientId", pet.getClientId());
+	        }
+	        return "redirect:/clients/"+pid;
 
-        redirectAttributes.addAttribute("saved", true);
-        if(fromClientPage) {
-            redirectAttributes.addAttribute("clientId", pet.getClientId());
-        }
-        return "redirect:/pets/"+pet.getId();
-
-    }
+	    }
 
     /**
      * Delete a pet and redirect to either the pet listing page, or the client edit page
@@ -157,7 +163,12 @@ public class PetController {
 	public String deletePet(@PathVariable("id") String id,
 							@RequestParam(name="clientId", required=false) Integer clientId,
 							RedirectAttributes redirectAttributes) {
-
+		
+		logger.info("delete pet");
+		logger.info(this.getClass().toString());
+		logger.info(redirectAttributes.toString());
+		
+		int cid = petService.getPet(id).getClientId();
 	    // we pass the pet id to the service so it can delete the pet
 		petService.deletePet(id);
 
@@ -168,9 +179,9 @@ public class PetController {
             // if a client id was passed in, then we redirect to the client edit page
 			return "redirect:/clients/"+clientId;
 		}
-
+		
 		// otherwise we redirect to the petslisting page
-		return "redirect:/pets";
+		return "redirect:/clients/"+cid;
 
 	}
 }

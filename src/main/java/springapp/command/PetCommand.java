@@ -125,18 +125,8 @@ public class PetCommand {
 		return client;
 	}
 
-	/**
-	 * Set the client associated with the pet
-	 * @param client the client
-	 */
 	public void setClient(Client client) {
 		this.client = client;
 	}
 	
-	
-	
-	
-	
-	
-
 }

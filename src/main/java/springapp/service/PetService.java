@@ -18,6 +18,7 @@ public class PetService {
 	@Autowired 
 	PetDao petDao;
 	
+	
 	public List<Pet> getPets(){
 		return petDao.list();
 		
@@ -29,6 +30,10 @@ public class PetService {
 
 	public Pet getPet(String id) {
 		return petDao.get(Integer.parseInt(id));
+	}
+	
+	public List<Pet> listForClientPets(String id) {
+		return petDao.listForClient(Integer.parseInt(id));
 	}
 	
 	public Pet savePet(PetCommand command) {

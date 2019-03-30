@@ -17,6 +17,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import springapp.domain.Client;
 import springapp.domain.Gender;
 import springapp.domain.Pet;
 
@@ -24,40 +25,57 @@ import springapp.domain.Pet;
 @Scope("singleton")
 public class PetDao {
 	private Logger logger = LoggerFactory.getLogger(PetDao.class);
-
+	
+	@Autowired 
+	ClientDao clientDao;
+	
 	RowMapper<Pet> simplePetMapper = new RowMapper<Pet>() {
 
 		@Override
 		public Pet mapRow(ResultSet rs, int rowNum) throws SQLException {
+			logger.info(this.getClass().toString());
 			String genderString = rs.getString("gender");
 			Gender gender = null;
-			if(genderString!= null) {
+			
+			if(genderString!= null) 
 				gender = Gender.valueOf(genderString);
 
-			}
-			return new Pet(rs.getInt("id"), rs.getString("name"), gender, rs.getBoolean("altered"), rs.getInt("client_id"));
+			// create new client object using client_id
+			Client client = clientDao.get(rs.getInt("client_id"));
+			
+			Pet newPet = new Pet(rs.getInt("id"), rs.getString("name"), gender, rs.getBoolean("altered"), rs.getInt("client_id"));
+			// set client after initializing new pet
+			newPet.setClient(client);
+			
+			return newPet;
 		}
 	};
 	
 	
     @Autowired
     JdbcTemplate jdbcTemplate;
-    	
-	public List<Pet> list(){
+	public List<Pet> list2(){
+		// TODO: edit this SQL statement
 		List<Pet> queryResult = jdbcTemplate.query(
-				"SELECT id, name, gender, altered, client_id FROM pets",
+				"SELECT id, name, gender, altered, client_id FROM clients, pets",
 				simplePetMapper);
 		
+		return queryResult;
+	}
+    
+	public List<Pet> list(){
+		List<Pet> queryResult = jdbcTemplate.query(
+				"SELECT id, name, gender, altered, client_id FROM pets ORDER BY client_id",
+				simplePetMapper);
 		
 		return queryResult;
 	}
 	
 	public List<Pet> listForClient(int clientId){
 		List<Pet> queryResult = jdbcTemplate.query(
-				"SELECT id, name, gender, altered, client_id FROM pets WHERE client_id = ?",
+				"SELECT id, name, gender, altered, client_id from pets WHERE client_id = ?",
 				new Object[] {clientId},
 				simplePetMapper);
-		
 		
 		return queryResult;
 	}
@@ -68,13 +86,10 @@ public class PetDao {
 				new Object[] {id},
 				simplePetMapper);
 		
-		if(queryResult.isEmpty()) {
+		if(queryResult.isEmpty())
 			return null;
-		}
 		
 		return queryResult.get(0);
-		
-		
 	}
 	
 	public Pet save(Pet pet) {
@@ -93,7 +108,6 @@ public class PetDao {
 					statement.setBoolean(3, pet.isAltered());
 					statement.setInt(4, pet.getClientId());
 					return statement;
-
 				}
 			}, holder);
 			
