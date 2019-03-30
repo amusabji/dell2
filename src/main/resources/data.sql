@@ -1,8 +1,3 @@
-insert into users values (null, 'admin', 'password', 'SUPER_ADMIN');
-insert into users values (null, 'vet_user', 'vet', 'vet');
-insert into users values (null, 'front_desk', 'password', 'receptionist');
-insert into users values (null, 'user', 'password', 'user');
-
 -- test data
 -- generated at: https://www.generatedata.com/
 INSERT INTO clients(id,name,phone_number,address)

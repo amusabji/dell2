@@ -39,36 +39,4 @@ CREATE TABLE IF NOT EXISTS users(
     role TEXT DEFAULT 'USER'
 );
 
---additional tables
-
-DROP TABLE IF EXISTS user_client;
-DROP TABLE IF EXISTS veterinarians;
-DROP TABLE IF EXISTS vet_appointments;
-DROP TABLE IF EXISTS visits;
-
-CREATE TABLE IF NOT EXISTS user_client(
-    client_id integer REFERENCES clients(id),
-    user_id integer REFERENCES users(id) DEFAULT NULL
-);
-
-CREATE TABLE IF NOT EXISTS veterinarians(
-    id integer PRIMARY KEY AUTOINCREMENT,
-    name text
-);
-
-CREATE INDEX IF NOT EXISTS vet_index ON veterinarians(name);
-
-CREATE TABLE IF NOT EXISTS vet_appointments(
-    vet_id integer REFERENCES veterinarians(id),
-    appt_id integer REFERENCES appointments(id)
-);
-
-CREATE TABLE IF NOT EXISTS visits(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    pet_id INTEGER NOT NULL REFERENCES pets(id),
-    visit_date TEXT,
-    created TEXT DEFAULT CURRENT_DATE,
-    description TEXT
-);
-
-CREATE INDEX IF NOT EXISTS visits_pet_id_index ON visits(pet_id);
+insert into users values (null, 'admin', 'password', 'SUPER_ADMIN');
