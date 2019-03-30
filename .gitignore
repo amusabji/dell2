@@ -16,5 +16,6 @@ log/
 target/
 
 # Extras
-/spring-app.db
-/.dbeaver-data-sources.xml
+Scripts/
+spring-app.db
+.dbeaver-data-sources.xml
