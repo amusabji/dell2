@@ -1,40 +1,38 @@
-<!DOCTYPE HTML>
-<html>
-<header th:replace="fragments/head.html :: head" >
-</header>
-<body>
-	<div id="container" class="content pure-g" >
-		<header th:replace="fragments/header.html :: header" >
-		</header>
-		<div id="mainBody" class="pure-u column">
-			<div id="loginBox" >
-				<div class="bordered pure-u column">
-					
-					<div data-th-if="${param.error}" class="message-box-error">
-				        Invalid username and password
-				    </div>
-				    <div data-th-if="${param.logout}" class="message-box-info">
-				        You have been logged out
-				    </div>
-					<form data-th-action="@{/login}" method="post" class="pure-form pure-form-aligned">
-					    
-				       <div class="pure-control-group">
-				            <label for="username">Username</label>
-				            <input id="username" name="username" type="text" placeholder="Username">
-				        </div>
-		
-				        <div class="pure-control-group">
-				            <label for="password">Password</label>
-				            <input id="password" name="password" type="password" placeholder="Password">
-				        </div>
-				        <div class="pure-controls">
-		      	            <button type="submit" class="pure-button pure-button-primary">Sign In</button>
-			        	</div>
-					</form>
-					</div>
-		        </div>
-	        </div>
-        </div>
+<header th:replace="fragments/includes/tophalf.html"></header>
+<body id="page-top" class="text-center">
+<div class="container-fluid">
+
+<!-- Main Content --------------------------------------->
+
+    <h2>log in </h2>
+    <div class="row mb-3">
+      <div data-th-if="${param.error}" class="message-box-error col">
+        Invalid username and password
+      </div>
+      <div data-th-if="${param.logout}" class="message-box-info col">
+        You have been logged out
+      </div>
     </div>
-</body>
-</html>
+
+    <div class="row justify-content-center">
+      <form data-th-action="@{/login}" method="post" class="form-signin">
+        <div class="form-group col-sm">
+          <label for="username" class="sr-only">Username</label>
+          <input id="username" name="username" type="text" class="form-control form-control-sm" placeholder="Username">
+        </div>
+        <div class="form-group col-sm">
+          <label for="password" class="sr-only">Password</label>
+          <input id="password" name="password" type="password" class="form-control form-control-sm" placeholder="Password">
+        </div>
+        <div class="form-group col-sm">
+          <button type="submit" class="btn btn-primary btn-sm">Sign In</button>
+        </div>
+      </form>
+    </div>
+
+    
+<!-- end ------------------------------------------------->
+</div>
+<footer th:replace="fragments/includes/bottomhalf.html"></footer>
+<!-- add additional scripts below -->
+
