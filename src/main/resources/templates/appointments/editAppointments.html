@@ -6,23 +6,53 @@
 <!-- Main Content --------------------------------------->
 <!-- TODO: add calendar stuff here -->
 
-          <h3>edit appointment</h3>
+  <!-- ADD/EDIT CLIENT --------->
 
-            <div id="example-basic">
-                <h3>Keyboard</h3>
-                <section>
-                    <p>Try the keyboard navigation by clicking arrow left or right!</p>
-                </section>
-                <h3>Effects</h3>
-                <section>
-                    <p>Wonderful transition effects.</p>
-                </section>
-                <h3>Pager</h3>
-                <section>
-                    <p>The next and previous buttons help you to navigate through your content.</p>
-                </section>
-            </div>
-      
+  <form class="needs-validation" id="theForm" action="#" data-th-action="@{/appointments}" data-th-object="${command}" method="post">
+    <input type="hidden" data-th-field="*{id}" />
+    <div data-th-if="${saved}" class="message-box-info">
+      Saved
+    </div>
+
+    <input type="hidden" data-th-field="*{id}" />
+    <h4> Appointment Party </h4>
+    <div class="form-row">
+    	<div class="form-group col-md-4">
+    		<label class="small mb-0" for="name">Client ID</label>
+    		<input name="client_id" type="text" class="form-control" data-th-field="*{client_id}" readonly>
+    	</div>
+    	
+    	<div class="form-group col-md-4">
+    		<label class="small mb-0" for="pet_id">Pet ID</label>
+    		<input name="pet_id" type="text" class="form-control" data-th-field="*{pet_id}" readonly>
+    	</div>	
+    </div>
+    
+    <h4> Appointment Details </h4>
+    <div class="form-row">
+      <div class="form-group col-md-4 was-validated">
+        <label class="small mb-0" for="name">Appointment Date</label>
+        <input id="appt_date" name="appt_date" placeholder="Appointment Date (MM/DD/YYYY)" type="text" class="form-control js-format-date" data-th-field="*{appt_date}" required>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label class="small mb-0" for="appt_time">Appointment Time</label>
+        <input id="appt_time" name="appt_time" placeholder="Appointment Time (HH:MM)" type="text" class="form-control js-format-time" data-th-field="*{appt_time}" required>
+      </div>
+    
+      <div class="form-group col-md-4">
+        <label class="small mb-0" for="appt_type">Appointment Reason</label>
+        <input id="appt_type" name="appt_type" placeholder="Reason for Appointment" type="text" class="form-control text-capitalize" data-th-field="*{appt_type}" required>
+      </div>
+
+    </div>
+  </form>
+   
+  <div class="row">
+  	<button type="submit" form="theForm" class="btn btn-primary btn-sm custom-buttons ml-3 mr-1" value="Save">Save</button>
+    <a class="btn btn-primary btn-sm custom-buttons mr-1" data-th-href="@{/appointments}">Cancel</a>
+    <a class="btn btn-primary btn-sm custom-buttons js-confirm-delete" data-toggle="confirmation">Delete</a>
+  </div>    
 
 <!-- end ------------------------------------------------->        
 </div>

@@ -1,6 +1,5 @@
 package springapp.service;
 
-
 import java.util.List;
 import java.util.UUID;
 
@@ -15,16 +14,21 @@ import springapp.domain.Appointment;
 import springapp.domain.Client;
 import springapp.domain.Pet;
 
-
 @Service
 public class AppointmentService {
 
-	@Autowired 
+	@Autowired
 	AppointmentDao appointmentDao;
 	
-	public List<Appointment> getAppointments(){
-		return appointmentDao.list();
-		
-	}
+	@Autowired
+	PetDao petDao;
 
+	public List<Appointment> getAppointments() {
+		return appointmentDao.list();
+	}
+	
+	public Appointment getAppointment(Integer id) {
+		return appointmentDao.get(id);
+	}
+	
 }

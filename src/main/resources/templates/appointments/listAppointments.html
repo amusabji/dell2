@@ -3,25 +3,27 @@
 
   <!-- Main Content --------------------------------------->
 
-  <h3>appointments table</h3>
+  <h3 class="mb-3">Appointments</h3>
   <div class="table-responsive" data-th-if="${appointments.size() > 0}">
     <table class="table table-sm table-bordered">
       <thead>
         <tr>
-          <th>id</th>
-          <th>pet</th>
-          <th>date</th>
-          <th>time</th>
-          <th>type</th>
+          <th>Appointment ID </th>
+          <th>Client ID</th>
+          <th>Pet ID</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Reason for Visit</th>
         </tr>
       </thead>
       <tbody>
         <tr data-th-each="appointment : ${appointments}">
-          <td data-th-text="${appointment.id}">...</td>
-          <td data-th-text="${appointment.pet.name}">...</td>
-          <td data-th-text="${appointment.apptDate}">...</td>
-          <td data-th-text="${appointment.apptTime}">...</td>
-          <td data-th-text="${appointment.apptType}">...</td>
+          		<td><a data-th-href="@{/appointments/{id}(id=${appointment.id})}" data-th-text="${appointment.id}">...</a></td>
+				<td data-th-text="${appointment.client_id}">...</td>
+				<td data-th-text="${appointment.pet_id}">...</td>
+				<td data-th-text="${appointment.appt_date}">...</td>
+				<td data-th-text="${appointment.appt_time}">...</td>
+				<td data-th-text="${appointment.appt_type}">...</td>
         </tr>
       </tbody>
     </table>

@@ -1,10 +1,7 @@
 package springapp.command;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import springapp.domain.Appointment;
 import springapp.domain.Client;
-import springapp.domain.Pet;
 
 /**
  * This command class is used to pass information back and force between the
@@ -14,47 +11,50 @@ import springapp.domain.Pet;
 public class AppointmentCommand {
 
 	private Integer id;
+	private Integer client_id;
 	private Integer pet_id;
-	private Integer appt_time;
-	private Date appt_date;
+	private String appt_time;
+	private String appt_date;
 	private String appt_type;
-	private Pet pet;
-	private Client client;
 
 	/**
-	 * Creates a command object that has the initial values the same as the appointment
+	 * Creates a command object that has the initial values the same as the client
 	 * passed in
 	 * 
+	 * @param client the client to initialize the command object with
 	 */
 	public AppointmentCommand(Appointment appointment) {
 		if (appointment != null) {
 			id = appointment.getId();
-			this.pet_id = appointment.getPetId();
-			this.appt_date = appointment.getApptDate();
-			this.appt_time = appointment.getApptTime();
-			this.appt_type = appointment.getApptType();
+			this.client_id = appointment.getClient_id();
+			this.pet_id = appointment.getPet_id();
+			this.appt_date = appointment.getAppt_date();
+			this.appt_time = appointment.getAppt_time();
+			this.appt_type = appointment.getAppt_type();
 		}
 	}
-	
-	public AppointmentCommand() {}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public Integer getPetId() {
+	public Integer getClient_id() {
+		return client_id;
+	}
+
+	public Integer getPet_id() {
 		return pet_id;
 	}
 
-	public Integer getApptTime() {
+	public String getAppt_time() {
 		return appt_time;
 	}
 
-	public Date getApptDate() {
+	public String getAppt_date() {
 		return appt_date;
 	}
 
-	public String getApptType() {
+	public String getAppt_type() {
 		return appt_type;
 	}
 
@@ -62,38 +62,25 @@ public class AppointmentCommand {
 		this.id = id;
 	}
 
-	public void setPetId(Integer pet_id) {
+	public void setClient_id(Integer client_id) {
+		this.client_id = client_id;
+	}
+
+	public void setPet_id(Integer pet_id) {
 		this.pet_id = pet_id;
 	}
 
-	public void setApptTime(Integer appt_time) {
+	public void setAppt_time(String appt_time) {
 		this.appt_time = appt_time;
 	}
 
-	public void setApptDate(Date appt_date) {
+	public void setAppt_date(String appt_date) {
 		this.appt_date = appt_date;
 	}
 
-	public void setApptType(String appt_type) {
+	public void setAppt_type(String appt_type) {
 		this.appt_type = appt_type;
 	}
-	
-	public Pet getPet() {
-		return pet;
-	}
-	
-	public void setPet(Pet pet) {
-		this.pet = pet;
-	}
-	
-	public Client getClient() {
-		return client;
-	}
-	
-	public void setClient(Client client) {
-		this.client = client;
-	}
-	
 
 	
 }
