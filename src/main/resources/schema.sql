@@ -1,42 +1,36 @@
-DROP TABLE IF EXISTS appointments;
-DROP TABLE IF EXISTS pets;
-DROP TABLE IF EXISTS clients;
-DROP TABLE IF EXISTS appointments;
-DROP TABLE IF EXISTS users;
-
-CREATE TABLE IF NOT EXISTS clients(
-    id integer PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    phone_number TEXT,
-    address TEXT
+create table clients (
+	id integer PRIMARY KEY AUTOINCREMENT,
+	name varchar(255),
+	phone_number varchar(255),
+	address varchar(255)
 );
 
-CREATE TABLE IF NOT EXISTS pets(
-    id integer PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    gender TEXT,
-    altered boolean,
-    client_id integer REFERENCES clients(id) ON DELETE CASCADE
+create table pets (
+	id integer PRIMARY KEY AUTOINCREMENT,
+	name varchar(255),
+	gender varchar(255),
+	altered boolean,
+	client_id integer,
+	FOREIGN KEY (client_id) REFERENCES clients(id)
+
 );
 
-CREATE INDEX IF NOT EXISTS pets_name_index ON pets(name);
-
-CREATE TABLE appointments(
-    id integer PRIMARY KEY AUTOINCREMENT,
-    pet_id integer REFERENCES pets(id),
-    appt_type text,
-    appt_date TEXT,
-    appt_time integer,
-    created TEXT DEFAULT CURRENT_DATE
+create table users (
+	id integer PRIMARY KEY AUTOINCREMENT,
+	username varchar(255),
+	encoded_password varchar(255),
+	role varchar(255)
 );
 
-CREATE INDEX IF NOT EXISTS appt_pet_id_index ON appointments(pet_id);
-
-CREATE TABLE IF NOT EXISTS users(
-    id integer PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    encoded_password TEXT NOT NULL,
-    role TEXT DEFAULT 'USER'
+create table appointments (
+	id integer PRIMARY KEY AUTOINCREMENT,
+	client_id integer,
+	pet_id integer,
+	appt_time varchar(255),
+	appt_date varchar(255),
+	appt_type varchar(255),
+	FOREIGN KEY (client_id) REFERENCES clients(id)
+	FOREIGN KEY (pet_id) REFERENCES pets(id)
 );
 
 insert into users values (null, 'admin', 'password', 'SUPER_ADMIN');
