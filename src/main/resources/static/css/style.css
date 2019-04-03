@@ -171,7 +171,8 @@ body {
 	margin: 2px 0;
 	padding: .1rem .4rem;
 	font-size: .8em;
-	opacity: 1.8
+	opacity: 1.8;
+	max-height: 1.625rem;
 }
 
 .btn-primary.custom-buttons {
