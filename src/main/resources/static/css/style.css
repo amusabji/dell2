@@ -424,3 +424,7 @@ form.custom-labels:hover label {
 	text-decoration: none;
 	background-color: #f8f9fa
 }
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #dbd2eb8c;
+ }  

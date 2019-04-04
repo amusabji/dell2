@@ -1,9 +1,6 @@
 package springapp.controller;
 
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -27,16 +24,14 @@ import springapp.service.ClientService;
 @RequestMapping("/clients") //notice that this path is set at the class level.
 public class ClientController {
 
-    private Logger logger = LoggerFactory.getLogger(ClientController.class);
-
-    // Inject in a ClientService claass
+    // Inject in a ClientService class
 	@Autowired
 	ClientService clientService;
 
     /**
      * Returns the name of the view template that should be used along witht the model to draw the list of clients
      *
-     * Note that no addiontal path is specified, and that this method only handles a GET
+     * Note that no additional path is specified, and that this method only handles a GET
      * @param model the model to populate for merging  with the view
      * @return the client list page template
      */
@@ -72,9 +67,9 @@ public class ClientController {
 			// we create a client command that can be used when the browser sends the save object
 			model.addAttribute("command", new ClientCommand(client));
 
-			// we get the list of pets, and send those as is since we dont need a command to carry changes to the pets
-            // from this page
+			// we get the list of pets and appointments, and send those as is since we dont need a command to carry changes
 			model.addAttribute("pets", clientService.getPets(client.getId()) );
+			model.addAttribute("appointments", clientService.getAppointments(client.getId()));
 		}
 		return "clients/editClient";
 	}

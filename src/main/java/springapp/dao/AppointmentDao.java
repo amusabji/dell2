@@ -93,5 +93,14 @@ public class AppointmentDao {
 
 		return get(id);
 	}
+	
+	public List<Appointment> listForClient(int clientId){
+		List<Appointment> queryResult = jdbcTemplate.query(
+				"SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments WHERE client_id = ?",
+				new Object[] {clientId},
+				simpleMapper);
+
+		return queryResult;
+	}
 
 }
