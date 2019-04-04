@@ -18,8 +18,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import springapp.domain.Appointment;
-import springapp.domain.Client;
-
 /**
  * This is the client dao that is responsible for managing the clients info in
  * the databsae. The dao acts as the 'gatekeeper' between the rest of the code
@@ -58,6 +56,42 @@ public class AppointmentDao {
 		}
 		
 		return queryResult.get(0);
+	}
+	
+	public void delete(int id) {
+		jdbcTemplate.update("DELETE FROM appointments WHERE id = ?",
+				new Object[] {id});
+	}
+
+	public Appointment save(Appointment appointment) {
+		Integer id = appointment.getId();
+		if(id == null) {
+
+			KeyHolder holder = new GeneratedKeyHolder();
+
+			jdbcTemplate.update(new PreparedStatementCreator() {
+
+				@Override
+				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+					PreparedStatement statement = con.prepareStatement("INSERT INTO appointments(client_id, pet_id, appt_time, appt_date, appt_type) VALUES (?, ?, ?, ?, ?)");
+					statement.setInt(1, appointment.getClient_id());
+					statement.setInt(2, appointment.getPet_id());
+					statement.setString(3, appointment.getAppt_time());
+					statement.setString(4, appointment.getAppt_date());
+					statement.setString(5, appointment.getAppt_type());
+					return statement;
+
+				}
+			}, holder);
+
+			id = holder.getKey().intValue();
+
+		} else {
+			jdbcTemplate.update("UPDATE appointments SET client_id = ?, pet_id= ? , appt_time = ? , appt_date = ? , appt_type = ? WHERE id = ?",
+					new Object[] {appointment.getClient_id(), appointment.getPet_id(), appointment.getAppt_time(), appointment.getAppt_date(), appointment.getAppt_type(), id});
+		}
+
+		return get(id);
 	}
 
 }

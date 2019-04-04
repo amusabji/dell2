@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Our implementaion of the UserDetailsService that the security framework expects.
+ * Our implementation of the UserDetailsService that the security framework expects.
  */
 @Service
 public class SecurityService implements UserDetailsService {

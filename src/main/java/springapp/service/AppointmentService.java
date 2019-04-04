@@ -1,18 +1,13 @@
 package springapp.service;
 
 import java.util.List;
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import springapp.command.ClientCommand;
+import springapp.command.AppointmentCommand;
 import springapp.dao.AppointmentDao;
-import springapp.dao.ClientDao;
 import springapp.dao.PetDao;
 import springapp.domain.Appointment;
-import springapp.domain.Client;
-import springapp.domain.Pet;
 
 @Service
 public class AppointmentService {
@@ -31,4 +26,13 @@ public class AppointmentService {
 		return appointmentDao.get(id);
 	}
 	
+	public void deleteAppointment(String id) {
+		appointmentDao.delete(Integer.parseInt(id));
+	}
+
+	public Appointment saveAppointment(AppointmentCommand toSave) {
+		Appointment appointment= new Appointment(toSave.getId(), toSave.getClient_id(), toSave.getPet_id(), toSave.getAppt_time(), toSave.getAppt_date(), toSave.getAppt_type());
+
+		return appointmentDao.save(appointment);
+	}
 }

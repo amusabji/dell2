@@ -19,12 +19,12 @@
     <div class="form-row">
     	<div class="form-group col-md-4">
     		<label class="small mb-0" for="name">Client ID</label>
-    		<input name="client_id" type="text" class="form-control" data-th-field="*{client_id}" readonly>
+    		<input name="client_id" type="text" class="form-control" data-th-field="*{client_id}">
     	</div>
     	
     	<div class="form-group col-md-4">
     		<label class="small mb-0" for="pet_id">Pet ID</label>
-    		<input name="pet_id" type="text" class="form-control" data-th-field="*{pet_id}" readonly>
+    		<input name="pet_id" type="text" class="form-control" data-th-field="*{pet_id}">
     	</div>	
     </div>
     
@@ -50,7 +50,7 @@
   <div class="row">
   	<button type="submit" form="theForm" class="btn btn-primary btn-sm custom-buttons ml-3 mr-1" value="Save">Save</button>
     <a class="btn btn-primary btn-sm custom-buttons mr-1" data-th-href="@{/appointments}">Cancel</a>
-    <a class="btn btn-primary btn-sm custom-buttons js-confirm-delete" data-toggle="confirmation">Delete</a>
+    <a class="btn btn-primary btn-sm custom-buttons js-confirm-delete" data-toggle="confirmation" targetdata-th-if="${command.id != null}" data-th-href="@{/appointments/{c}/delete(c=${command?.id})}">Delete</a>
   </div>    
 
 <!-- end ------------------------------------------------->        
