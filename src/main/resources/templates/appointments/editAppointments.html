@@ -5,8 +5,14 @@
 
 <!-- Main Content --------------------------------------->
 <!-- TODO: add calendar stuff here -->
-
-  <!-- ADD/EDIT CLIENT --------->
+ <!-- 
+  <div>
+    <label class="small mb-0" for="client_name">Client Name</label>  
+  	<input name="client_name" type="text" class="form-control" data-th-field="*{client.name}">
+  </div>
+---->
+  
+  <!-- ADD/EDIT APPOINTMENT --------->
 
   <form class="needs-validation" id="theForm" action="#" data-th-action="@{/appointments}" data-th-object="${command}" method="post">
     <input type="hidden" data-th-field="*{id}" />

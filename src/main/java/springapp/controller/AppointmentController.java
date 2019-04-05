@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import springapp.command.AppointmentCommand;
 import springapp.domain.Appointment;
+import springapp.domain.Client;
 import springapp.service.AppointmentService;
 import springapp.service.PetService;
 
@@ -54,6 +55,8 @@ public class AppointmentController {
 			Appointment appointment = appointmentService.getAppointment(Integer.parseInt(id));
 			// we create a client command that can be used when the browser sends the save object
 			model.addAttribute("command", new AppointmentCommand(appointment));
+			Client client = appointmentService.getClient(Integer.parseInt(id));
+			model.addAttribute("client", client);
 		}
 		return "appointments/editAppointments";
 	}
@@ -106,6 +109,12 @@ public class AppointmentController {
 
          // redirect to list appointments path/page
          return "redirect:/appointments";
-    } 
+    }
+     
+     @PreAuthorize("hasAuthority('SAVE_CLIENT')")
+	 @GetMapping("/clients/{id}/appointments/new")
+     public String getAppointmentFromClient(@PathVariable("id") String id, AppointmentCommand command, RedirectAttributes redirectAttributes) {
+    	 return "appointments/editAppointments";
+     }
 
 }

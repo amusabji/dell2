@@ -102,5 +102,17 @@ public class AppointmentDao {
 
 		return queryResult;
 	}
+	
+	public int getClientId(int appointmentId) {
+		List<Appointment> queryResult = jdbcTemplate
+				.query("SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments WHERE id = ? LIMIT 1", new Object[] {appointmentId}, simpleMapper);
+		
+		if(queryResult.isEmpty()) {
+			return -1;
+		}
+		
+		return queryResult.get(0).getClient_id();
+		
+	}
 
 }

@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 
 import springapp.command.AppointmentCommand;
 import springapp.dao.AppointmentDao;
+import springapp.dao.ClientDao;
 import springapp.dao.PetDao;
 import springapp.domain.Appointment;
+import springapp.domain.Client;
 
 @Service
 public class AppointmentService {
@@ -17,6 +19,9 @@ public class AppointmentService {
 	
 	@Autowired
 	PetDao petDao;
+	
+	@Autowired
+	ClientDao clientDao;
 
 	public List<Appointment> getAppointments() {
 		return appointmentDao.list();
@@ -34,5 +39,12 @@ public class AppointmentService {
 		Appointment appointment= new Appointment(toSave.getId(), toSave.getClient_id(), toSave.getPet_id(), toSave.getAppt_time(), toSave.getAppt_date(), toSave.getAppt_type());
 
 		return appointmentDao.save(appointment);
+	}
+	
+	public Client getClient(int appointmentId) {
+		int clientId = appointmentDao.getClientId(appointmentId);
+		Client client = clientDao.get(clientId);
+		return client;
+		
 	}
 }

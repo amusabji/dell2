@@ -4,7 +4,7 @@
 <!-- Main Content --------------------------------------->
 
   <!-- ADD/EDIT CLIENT --------->
-
+  
   <form class="needs-validation" id="theForm" action="#" data-th-action="@{/clients}" data-th-object="${command}" method="post">
     <input type="hidden" data-th-field="*{id}" />
     <div data-th-if="${saved}" class="message-box-info">
@@ -40,7 +40,7 @@
       <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-if="${command.id != null}" data-toggle="collapse" href="#collapseAddNewPet" role="button" aria-expanded="false" aria-controls="collapseAddNewPet">
         add pet
       </a>
-	  <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-href="@{'/appointments/new'}">
+	  <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-href="@{/clients/{c}/appointments/new(c=${command?.id})}">
         add new appointment
       </a>
     </div>
