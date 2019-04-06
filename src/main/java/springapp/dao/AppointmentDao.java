@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +16,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
 import springapp.domain.Appointment;
+import springapp.domain.AppointmentClientPetRelationship;;
+
 /**
  * This is the client dao that is responsible for managing the clients info in
  * the databsae. The dao acts as the 'gatekeeper' between the rest of the code
@@ -36,6 +37,29 @@ public class AppointmentDao {
 					rs.getString("appt_time"), rs.getString("appt_date"), rs.getString("appt_type"));
 		}
 	};
+	
+	RowMapper<AppointmentClientPetRelationship> simpleAppointmentClientPetMapper = new RowMapper<AppointmentClientPetRelationship>() {
+
+		@Override
+		public AppointmentClientPetRelationship mapRow(ResultSet rs, int rowNum) throws SQLException {
+			
+		        HashMap<Integer,String> mapRet= new HashMap<Integer,String>();
+		        
+				Integer client_id = -1;
+				String client_name = "";
+				
+		        while(rs.next()){
+		        	if(client_id == -1) {
+			        	client_id = rs.getInt("client_id");
+			        	client_name = rs.getString("client_name");
+		        	}
+		        	
+		            mapRet.put(rs.getInt("pet_id"),rs.getString("pet_name"));
+		        }
+		    
+			return new AppointmentClientPetRelationship(client_id, client_name, mapRet);
+		}
+	};
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -45,6 +69,17 @@ public class AppointmentDao {
 				.query("SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments", simpleMapper);
 
 		return queryResult;
+	}
+	
+	public AppointmentClientPetRelationship getApptClientPet(int client_id) {
+		List<AppointmentClientPetRelationship> queryResult = jdbcTemplate
+				.query("SELECT appt.client_id, appt.pet_id, c.name as client_name, p.name as pet_name " + 
+						"FROM appointments appt " + 
+						"LEFT JOIN clients c ON appt.client_id = c.id " + 
+						"LEFT JOIN pets p ON appt.pet_id = p.id " + 
+						"WHERE c.id = ?", new Object[] {client_id}, simpleAppointmentClientPetMapper);
+
+		return queryResult.get(0);
 	}
 	
 	public Appointment get(int id) {
@@ -103,4 +138,5 @@ public class AppointmentDao {
 		return queryResult;
 	}
 
+	
 }

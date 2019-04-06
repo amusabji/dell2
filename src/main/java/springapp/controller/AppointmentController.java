@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import springapp.command.AppointmentClientPetCommand;
 import springapp.command.AppointmentCommand;
 import springapp.domain.Appointment;
+import springapp.domain.AppointmentClientPetRelationship;
 import springapp.service.AppointmentService;
 import springapp.service.PetService;
 
@@ -42,12 +44,13 @@ public class AppointmentController {
 	}
 	
 	 @PreAuthorize("hasAuthority('GET_CLIENT')")
-	 @GetMapping("/{id}")
-	 public String getAppointment(@PathVariable("id") String id, Model model, boolean saved) {
+	 @GetMapping("/{id}/Client/{client_id}")
+	 public String getAppointment(@PathVariable("id") String id, @PathVariable("client_id") Integer client_id, Model model, boolean saved) {
 
 		model.addAttribute("saved", saved);
 	    if(id.equals("new")) {
-	     model.addAttribute("command", new AppointmentCommand(null));	
+	    	AppointmentClientPetRelationship apptClientPet = appointmentService.getApptClientPet(client_id);
+	    	model.addAttribute("command", new AppointmentClientPetCommand(apptClientPet));	
 		
 	    } else {
 	        // since we have a valid id, get the client object from the service

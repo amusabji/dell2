@@ -19,14 +19,12 @@
     <div class="form-row">
     	<div class="form-group col-md-4">
     		<label class="small mb-0" for="name">Client ID</label>
-    		<input name="client_id" type="text" class="form-control" data-th-field="*{command.client_id}">
+    		<input name="client_id" type="text" class="form-control" data-th-field="*{client_id}">
     	</div>
     	
     	<div class="form-group col-md-4">
     		<label class="small mb-0" for="pet_id">Pet ID</label>
-    		<select data-th-field = "*{pet_id}">
-	    		<option data-th-each="pet : ${command.pet_id_name}" data-th-value="${pet.pet_id}" data-th-text="${pet.pet_name}"></option> 
-            </select>
+    		<input name="pet_id" type="text" class="form-control" data-th-field="*{pet_id}">
     	</div>	
     </div>
     

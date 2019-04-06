@@ -8,6 +8,7 @@ import springapp.command.AppointmentCommand;
 import springapp.dao.AppointmentDao;
 import springapp.dao.PetDao;
 import springapp.domain.Appointment;
+import springapp.domain.AppointmentClientPetRelationship;
 
 @Service
 public class AppointmentService {
@@ -24,6 +25,10 @@ public class AppointmentService {
 	
 	public Appointment getAppointment(Integer id) {
 		return appointmentDao.get(id);
+	}
+	
+	public AppointmentClientPetRelationship getApptClientPet(Integer client_id) {
+		return appointmentDao.getApptClientPet(client_id);
 	}
 	
 	public void deleteAppointment(String id) {
