@@ -29,6 +29,7 @@ import springapp.domain.AppointmentClientPetRelationship;;
 public class AppointmentDao {
 	private Logger logger = LoggerFactory.getLogger(AppointmentDao.class);
 
+
 	RowMapper<Appointment> simpleMapper = new RowMapper<Appointment>() {
 
 		@Override
@@ -44,7 +45,10 @@ public class AppointmentDao {
 		public AppointmentClientPetRelationship mapRow(ResultSet rs, int rowNum) throws SQLException {
 			
 		        HashMap<Integer,String> mapRet= new HashMap<Integer,String>();
-		        
+		        mapRet.put(1,  "Oscar");
+		        mapRet.put(2, "Monster");
+		        Appointment appt = new Appointment(1, 1, 2, "10:00", "01/01/2020", "shampoo");
+		        /*
 				Integer client_id = -1;
 				String client_name = "";
 				Appointment appt = null;
@@ -57,8 +61,9 @@ public class AppointmentDao {
 		        	
 		            mapRet.put(rs.getInt("pet_id"),rs.getString("pet_name"));
 		        }
+		        */
 		    
-			return new AppointmentClientPetRelationship(appt, client_name, mapRet);
+			return new AppointmentClientPetRelationship(appt, "big bird", mapRet);
 		}
 	};
 
@@ -74,11 +79,18 @@ public class AppointmentDao {
 	
 	public AppointmentClientPetRelationship getApptClientPet(int client_id) {
 		List<AppointmentClientPetRelationship> queryResult = jdbcTemplate
-				.query("SELECT c.name as client_name, p.name as pet_name, appt.id as id, appt.client_id as client_id, appt.pet_id as pet_id, appt_time, appt_date, appt_type " + 
-						"FROM clients c " + 
-						"INNER JOIN pets p ON c.id = p.client_id " + 
-						"LEFT JOIN appointments appt on appt.client_id = c.id " + 
-						"WHERE c.id = ? " , new Object[] {client_id}, simpleAppointmentClientPetMapper);
+				.query("SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments WHERE client_id = ? LIMIT 1", new Object[] {client_id}, simpleAppointmentClientPetMapper);
+		
+		/*List<AppointmentClientPetRelationship> queryResult = jdbcTemplate
+				.query("SELECT 1 as id", new Object[] {client_id}, simpleAppointmentClientPetMapper);
+				
+				.query("SELECT c.name as client_name, p.name as pet_name, appt.id as id, appt.client_id as client_id, appt.pet_id, appt_time, appt_date, appt_type " +
+						"FROM clients c " +
+						"INNER JOIN pets p ON c.id = p.client_id " +
+						"LEFT JOIN appointments appt on appt.client_id = c.id " +
+						"WHERE c.id = 1 ", new Object[] {client_id}, simpleAppointmentClientPetMapper);*/
+				
+				
 		if (queryResult.isEmpty())
 			return null;
 		
