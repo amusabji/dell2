@@ -9,50 +9,53 @@
   <!-- ADD/EDIT CLIENT --------->
 
   <form class="needs-validation" id="theForm" action="#" data-th-action="@{/appointments}" data-th-object="${command}" method="post">
-    <input type="hidden" data-th-field="*{id}" />
+   <input type="hidden" data-th-field="*{appointment.id}"/>
     <div data-th-if="${saved}" class="message-box-info">
       Saved
     </div>
-
-    <input type="hidden" data-th-field="*{id}" />
-     <h4> Appointment Details </h4>
-    <div class="form-row">
+   
+   <input type="hidden" data-th-field="*{appointment.id}" />
+   <h4> Appointment Details </h4>
+     <div class="form-row">
+     <!-- 
     	<div class="form-group col-md-4">
     		<label class="small mb-0" for="name">Client ID</label>
-    		<input name="client_id" type="text" class="form-control" data-th-field="*{command.client_id}">
+    		<input name="client_id" type="text" class="form-control" data-th-value="${command.appointment.client_id}">
     	</div>
-    	
+    
     	<div class="form-group col-md-4">
-    		<label class="small mb-0" for="pet_id">Pet ID</label>
-    		<select data-th-field = "*{pet_id}">
-	    		<option data-th-each="pet : ${command.pet_id_name}" data-th-value="${pet.pet_id}" data-th-text="${pet.pet_name}"></option> 
+    		<label class="small mb-0" for="petId">Pet ID</label>
+    		<div>
+    		<select data-th-field = "*{appointment.pet_id}">
+	    		<option data-th-each="entry : ${command.pet_hashMap.entrySet()}" data-th-value="${entry.key}" data-th-text="${entry.value}"></option> 
             </select>
+            </div>
     	</div>	
-    </div>
-    
-    <div class="form-row">
-      <div class="form-group col-md-4 was-validated">
-        <label class="small mb-0" for="name">Appointment Date</label>
-        <input id="appt_date" name="appt_date" placeholder="Appointment Date (MM/DD/YYYY)" type="text" class="form-control js-format-date" data-th-field="*{appt_date}" required>
-      </div>
-
-      <div class="form-group col-md-4">
-        <label class="small mb-0" for="appt_time">Appointment Time</label>
-        <input id="appt_time" name="appt_time" placeholder="Appointment Time (HH:MM)" type="text" class="form-control js-format-time" data-th-field="*{appt_time}" required>
-      </div>
-    
-      <div class="form-group col-md-4">
-        <label class="small mb-0" for="appt_type">Appointment Reason</label>
-        <input id="appt_type" name="appt_type" placeholder="Reason for Appointment" type="text" class="form-control text-capitalize" data-th-field="*{appt_type}" required>
-      </div>
-
+     -->
+    	<div class="form-row">
+	      <div class="form-group col-md-4 was-validated">
+	        <label class="small mb-0" for="name">Appointment Date</label>
+	        <input id="appt_date" name="appt_date" placeholder="Appointment Date (MM/DD/YYYY)" type="text" class="form-control js-format-date" data-th-field="*{appointment.appt_date}" required>
+	      </div>
+	
+	      <div class="form-group col-md-4">
+	        <label class="small mb-0" for="appt_time">Appointment Time</label>
+	        <input id="appt_time" name="appt_time" placeholder="Appointment Time (HH:MM)" type="text" class="form-control js-format-time" data-th-field="*{appointment.appt_time}" required>
+	      </div>
+	    
+	      <div class="form-group col-md-4">
+	        <label class="small mb-0" for="appt_type">Appointment Reason</label>
+	        <input id="appt_type" name="appt_type" placeholder="Reason for Appointment" type="text" class="form-control text-capitalize" data-th-field="*{appointment.appt_type}" required>
+	      </div>
+    	
+    	</div>
     </div>
   </form>
    
   <div class="row">
   	<button type="submit" form="theForm" class="btn btn-primary btn-sm custom-buttons ml-3 mr-1" value="Save">Save</button>
     <a class="btn btn-primary btn-sm custom-buttons mr-1" data-th-href="@{/appointments}">Cancel</a>
-    <a class="btn btn-primary btn-sm custom-buttons js-confirm-delete" data-toggle="confirmation" targetdata-th-if="${command.id != null}" data-th-href="@{/appointments/{c}/delete(c=${command?.id})}">Delete</a>
+    <a class="btn btn-primary btn-sm custom-buttons js-confirm-delete" data-toggle="confirmation" targetdata-th-if="${command.appointment.id != null}" data-th-href="@{/appointments/{c}/delete(c=${command?.appointment.id})}">Delete</a>
   </div>    
 
 <!-- end ------------------------------------------------->        

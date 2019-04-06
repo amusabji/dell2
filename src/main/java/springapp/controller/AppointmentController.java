@@ -50,8 +50,12 @@ public class AppointmentController {
 		model.addAttribute("saved", saved);
 	    if(id.equals("new")) {
 	    	AppointmentClientPetRelationship apptClientPet = appointmentService.getApptClientPet(client_id);
-	    	model.addAttribute("command", new AppointmentClientPetCommand(apptClientPet));	
-		
+	    	if(apptClientPet.equals(null))
+	    	{
+	    		return "clients/editAppointments";
+	    	}else {
+	    		model.addAttribute("command", new AppointmentClientPetCommand(apptClientPet));	
+	    	}
 	    } else {
 	        // since we have a valid id, get the client object from the service
 			Appointment appointment = appointmentService.getAppointment(Integer.parseInt(id));

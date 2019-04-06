@@ -13,9 +13,9 @@ import springapp.domain.AppointmentClientPetRelationship;
  */
 public class AppointmentClientPetCommand {
 
-	private Integer client_id;
+	private Appointment appointment;
 	private String client_name;
-	private HashMap<Integer, String> pet_id_name;
+	private HashMap<Integer, String> pet_hashMap;
 
 	/**
 	 * Creates a command object that has the initial values the same as the client
@@ -25,34 +25,34 @@ public class AppointmentClientPetCommand {
 	 */
 	public AppointmentClientPetCommand(AppointmentClientPetRelationship apptClientPet) {
 		if (apptClientPet != null) {
-			this.client_id = apptClientPet.getClient_id();
+			this.appointment = apptClientPet.getAppointment();
 			this.client_name = apptClientPet.getClient_name();
-			this.pet_id_name = apptClientPet.getPet_id_name();
+			this.pet_hashMap = apptClientPet.getPet_hashMap();
 		}
 	}
 
-	public Integer getClient_id() {
-		return client_id;
+	public Appointment getAppointment() {
+		return appointment;
 	}
 	
 	public String getClient_name() {
 		return client_name;
 	}
 
-	public HashMap<Integer, String> getPet_id_name() {
-		return pet_id_name;
+	public HashMap<Integer, String> getPet_hashMap() {
+		return pet_hashMap;
 	}
 
-	public void setClient_id(Integer client_id) {
-		this.client_id = client_id;
+	public void setClient_id(Appointment appointment) {
+		this.appointment = appointment;
 	}
 
 	public void setClient_name(String client_name) {
 		this.client_name = client_name;
 	}
 	
-	public void setPet_id_name(HashMap<Integer, String> pet_id_name) {
-		this.pet_id_name = pet_id_name;
+	public void setPet_id_name(HashMap<Integer, String> pet_hashMap) {
+		this.pet_hashMap = pet_hashMap;
 	}
 
 }

@@ -47,17 +47,18 @@ public class AppointmentDao {
 		        
 				Integer client_id = -1;
 				String client_name = "";
-				
+				Appointment appt = null;
 		        while(rs.next()){
 		        	if(client_id == -1) {
-			        	client_id = rs.getInt("client_id");
 			        	client_name = rs.getString("client_name");
+			        	appt = new Appointment(rs.getInt("id"), rs.getInt("client_id"), rs.getInt("pet_id"),
+								rs.getString("appt_time"), rs.getString("appt_date"), rs.getString("appt_type"));
 		        	}
 		        	
 		            mapRet.put(rs.getInt("pet_id"),rs.getString("pet_name"));
 		        }
 		    
-			return new AppointmentClientPetRelationship(client_id, client_name, mapRet);
+			return new AppointmentClientPetRelationship(appt, client_name, mapRet);
 		}
 	};
 
@@ -73,12 +74,14 @@ public class AppointmentDao {
 	
 	public AppointmentClientPetRelationship getApptClientPet(int client_id) {
 		List<AppointmentClientPetRelationship> queryResult = jdbcTemplate
-				.query("SELECT appt.client_id, appt.pet_id, c.name as client_name, p.name as pet_name " + 
-						"FROM appointments appt " + 
-						"LEFT JOIN clients c ON appt.client_id = c.id " + 
-						"LEFT JOIN pets p ON appt.pet_id = p.id " + 
-						"WHERE c.id = ?", new Object[] {client_id}, simpleAppointmentClientPetMapper);
-
+				.query("SELECT c.name as client_name, p.name as pet_name, appt.id as id, appt.client_id as client_id, appt.pet_id as pet_id, appt_time, appt_date, appt_type " + 
+						"FROM clients c " + 
+						"INNER JOIN pets p ON c.id = p.client_id " + 
+						"LEFT JOIN appointments appt on appt.client_id = c.id " + 
+						"WHERE c.id = ? " , new Object[] {client_id}, simpleAppointmentClientPetMapper);
+		if (queryResult.isEmpty())
+			return null;
+		
 		return queryResult.get(0);
 	}
 	
