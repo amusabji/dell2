@@ -40,9 +40,15 @@
       <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-if="${command.id != null}" data-toggle="collapse" href="#collapseAddNewPet" role="button" aria-expanded="false" aria-controls="collapseAddNewPet">
         add pet
       </a>
-	  <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-href="@{/clients/{c}/appointments/new(c=${command?.id})}">
+      <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-if="${command.id != null}" data-toggle="collapse" href="#collapseAddNewAppointment" role="button" aria-expanded="false" aria-controls="collapseAddNewAppointment">
         add new appointment
       </a>
+	    <!-- <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-if="${command.id != null}" data-th-href="@{/clients/{c}/appointments/new(c=${command?.id})}">
+        add new appointment
+      </a> -->
+      <!-- <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-href="@{/appointments/new}">
+        add new appointment
+      </a>  -->
     </div>
   </div>
 
@@ -51,17 +57,17 @@
   <!-- ADD NEW PET --------->
   <div class="collapse" id="collapseAddNewPet">
     <div class="card card-body mb-2 col border-1 bg-transparent p-2">
-      <h4 class="text-muted font-weight-light">new pet</h4>
+      <h4 class="text-muted font-weight-light mx-2">new pet</h4>
 
       <form class="needs-validation" id="petForm" action="#" data-th-action="@{/pets}" method="post">
         <input name="clientId" type="hidden" data-th-value="${command.id}">
 
-        <div class="form-row was-validated align-items-center">
+        <div class="form-row was-validated mx-1">
           <div class="form-group col-6">
             <label class="small mb-0" for="name">name</label>
             <input id="name" name="name" placeholder="pet name" type="text" class="form-control form-control-sm text-capitalize" required>
-
           </div>
+          
           <div class="form-group col-2">
             <label for="gender" class="small mb-0">gender</label>
             <select id="gender" name="gender" class="form-control form-control-sm">
@@ -69,23 +75,69 @@
               <option value="Female">F</option>
             </select>
           </div>
-
-          <div class="form-check ml-2">
+          
+          <div class="form-check mt-4 ml-3">
             <input class="form-check-input" type="checkbox" id="altered" name="altered">
             <label class="form-check-label small" for="altered" id="altered" name="altered" type="checkbox">
               Altered
             </label>
           </div>
-
-
-          <div class="form-group col-auto">
-            <button type="submit" form="petForm" class="btn btn-primary btn-sm border-0" value="add">Add</button>
-          </div>
+          
         </div>
+        
+	      <div class="form-group">
+	        <button type="submit" form="petForm" class="btn btn-primary btn-sm mx-2" value="add">Add</button>
+	      </div>
+          
       </form>
 
     </div>
   </div>
+
+    <!-- ADD/EDIT APPOINTMENT --------->
+    <div class="collapse" id="collapseAddNewAppointment">
+		<div class="card card-body mb-2 col border-1 bg-transparent p-2">
+      		<h4 class="text-muted font-weight-light mx-2">new appointment</h4>
+
+	      <form class="needs-validation" id="appointmentForm" action="#" data-th-action="@{/appointments}" method="post">
+			<div class="form-row mx-1">
+				<div class="form-group col-md-4">
+	    			<label class="small mb-0" for="name">Client ID</label>
+	    			<input name="client_id" type="text" class="form-control" data-th-value="${command.id}" readonly>
+	    		</div>
+	    		
+	    		<div class="form-group col-md-4">
+	    			<label class="small mb-0" for="pet_id">Pet ID</label>
+	    			<input id="pet_id" name="pet_id" type="text" class="form-control">
+	    		</div>
+    		</div>
+    		
+	       <div class="form-row mx-1">
+		      <div class="form-group col-md-4 was-validated">
+		        <label class="small mb-0" for="name">Appointment Date</label>
+		        <input id="appt_date" name="appt_date" placeholder="Appointment Date (MM/DD/YYYY)" type="text" class="form-control js-format-date" required>
+		      </div>
+		
+		      <div class="form-group col-md-4">
+		        <label class="small mb-0" for="appt_time">Appointment Time</label>
+		        <input id="appt_time" name="appt_time" placeholder="Appointment Time (HH:MM)" type="text" class="form-control js-format-time" required>
+		      </div>
+		    
+		      <div class="form-group col-md-4">
+		        <label class="small mb-0" for="appt_type">Appointment Reason</label>
+		        <input id="appt_type" name="appt_type" placeholder="Reason for Appointment" type="text" class="form-control text-capitalize" required>
+		      </div>
+    		</div>
+	      	
+	      <div class="form-group">
+            <button type="submit" form="appointmentForm" class="btn btn-primary btn-sm mx-2" value="add">Add</button>
+          </div>
+	        
+	     </form>
+
+    	</div>  
+    </div>
+
 
   <div class="mt-4" data-th-if="${command.id != null}">
 

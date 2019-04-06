@@ -111,10 +111,5 @@ public class AppointmentController {
          return "redirect:/appointments";
     }
      
-     @PreAuthorize("hasAuthority('SAVE_CLIENT')")
-	 @GetMapping("/clients/{id}/appointments/new")
-     public String getAppointmentFromClient(@PathVariable("id") String id, AppointmentCommand command, RedirectAttributes redirectAttributes) {
-    	 return "appointments/editAppointments";
-     }
 
 }

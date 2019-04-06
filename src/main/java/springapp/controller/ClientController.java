@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import springapp.command.AppointmentCommand;
 import springapp.command.ClientCommand;
+import springapp.domain.Appointment;
 import springapp.domain.Client;
+import springapp.service.AppointmentService;
 import springapp.service.ClientService;
 
 /**
@@ -27,6 +30,9 @@ public class ClientController {
     // Inject in a ClientService class
 	@Autowired
 	ClientService clientService;
+	
+	@Autowired
+	AppointmentService appointmentService;
 
     /**
      * Returns the name of the view template that should be used along witht the model to draw the list of clients
@@ -122,5 +128,13 @@ public class ClientController {
          // redirect to list clients path/page
          return "redirect:/clients";
     }
+     
+     @PreAuthorize("hasAuthority('SAVE_APPOINTMENT')")
+	 @GetMapping("/{id}/appointments/new")
+     public String getAppointmentFromClient(@PathVariable("id") String id, AppointmentCommand command, RedirectAttributes redirectAttributes, Model model) {
+    	List<Appointment> appointments = appointmentService.getAppointments();
+ 		model.addAttribute("appointments", appointments);
+ 		return "appointments/listAppointments";
+     }
 
 }
