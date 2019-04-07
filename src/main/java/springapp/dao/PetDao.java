@@ -57,7 +57,7 @@ public class PetDao {
 	public List<Pet> list2(){
 		// TODO: edit this SQL statement
 		List<Pet> queryResult = jdbcTemplate.query(
-				"SELECT id, name, gender, altered, client_id FROM clients, pets",
+				"SELECT pets.id, pets.name, gender, altered, client_id FROM clients, pets",
 				simplePetMapper);
 		
 		return queryResult;

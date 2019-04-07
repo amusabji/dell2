@@ -29,7 +29,6 @@ import springapp.domain.AppointmentClientPetRelationship;;
 public class AppointmentDao {
 	private Logger logger = LoggerFactory.getLogger(AppointmentDao.class);
 
-
 	RowMapper<Appointment> simpleMapper = new RowMapper<Appointment>() {
 
 		@Override
@@ -38,32 +37,34 @@ public class AppointmentDao {
 					rs.getString("appt_time"), rs.getString("appt_date"), rs.getString("appt_type"));
 		}
 	};
-	
+
 	RowMapper<AppointmentClientPetRelationship> simpleAppointmentClientPetMapper = new RowMapper<AppointmentClientPetRelationship>() {
 
 		@Override
 		public AppointmentClientPetRelationship mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+			HashMap<Integer, String> mapRet = new HashMap<Integer, String>();
+			Integer client_id = -1;
+			String client_name = "";
+			Appointment appt = null;
+			Boolean continueRetrieving = true;
 			
-		        HashMap<Integer,String> mapRet= new HashMap<Integer,String>();
-		        mapRet.put(1,  "Oscar");
-		        mapRet.put(2, "Monster");
-		        Appointment appt = new Appointment(1, 1, 2, "10:00", "01/01/2020", "shampoo");
-		        /*
-				Integer client_id = -1;
-				String client_name = "";
-				Appointment appt = null;
-		        while(rs.next()){
-		        	if(client_id == -1) {
-			        	client_name = rs.getString("client_name");
-			        	appt = new Appointment(rs.getInt("id"), rs.getInt("client_id"), rs.getInt("pet_id"),
+			while (continueRetrieving == true) {
+				try{
+					if (client_id == -1) {
+						client_name = rs.getString("client_name");
+						appt = new Appointment(rs.getInt("id"), rs.getInt("client_id"), rs.getInt("pet_id"),
 								rs.getString("appt_time"), rs.getString("appt_date"), rs.getString("appt_type"));
-		        	}
-		        	
-		            mapRet.put(rs.getInt("pet_id"),rs.getString("pet_name"));
-		        }
-		        */
-		    
-			return new AppointmentClientPetRelationship(appt, "big bird", mapRet);
+					}
+
+					mapRet.put(rs.getInt("pet_id"), rs.getString("pet_name"));
+					rs.next();
+				}catch(Exception e) {
+					continueRetrieving = false;
+				}
+			}
+
+			return new AppointmentClientPetRelationship(appt, client_name, mapRet);
 		}
 	};
 
@@ -76,46 +77,40 @@ public class AppointmentDao {
 
 		return queryResult;
 	}
-	
+
 	public AppointmentClientPetRelationship getApptClientPet(int client_id) {
-		List<AppointmentClientPetRelationship> queryResult = jdbcTemplate
-				.query("SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments WHERE client_id = ? LIMIT 1", new Object[] {client_id}, simpleAppointmentClientPetMapper);
-		
-		/*List<AppointmentClientPetRelationship> queryResult = jdbcTemplate
-				.query("SELECT 1 as id", new Object[] {client_id}, simpleAppointmentClientPetMapper);
-				
-				.query("SELECT c.name as client_name, p.name as pet_name, appt.id as id, appt.client_id as client_id, appt.pet_id, appt_time, appt_date, appt_type " +
-						"FROM clients c " +
-						"INNER JOIN pets p ON c.id = p.client_id " +
-						"LEFT JOIN appointments appt on appt.client_id = c.id " +
-						"WHERE c.id = 1 ", new Object[] {client_id}, simpleAppointmentClientPetMapper);*/
-				
-				
+
+		List<AppointmentClientPetRelationship> queryResult = jdbcTemplate.query(
+				"SELECT DISTINCT '' AS id, '' AS appt_date, '' AS appt_time, '' AS appt_type, appt.client_id AS client_id, c.name AS client_name, appt.pet_id, p.name AS pet_name "
+						+ "FROM appointments appt " + "LEFT JOIN clients c ON appt.client_id = c.id "
+						+ "LEFT JOIN pets p ON appt.pet_id = p.id " + "WHERE appt.client_id = ? ",
+				new Object[] { client_id }, simpleAppointmentClientPetMapper);
+
 		if (queryResult.isEmpty())
 			return null;
-		
+
 		return queryResult.get(0);
 	}
-	
+
 	public Appointment get(int id) {
-		List<Appointment> queryResult = jdbcTemplate
-				.query("SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments WHERE id = ? LIMIT 1", new Object[] {id}, simpleMapper);
-		
-		if(queryResult.isEmpty()) {
+		List<Appointment> queryResult = jdbcTemplate.query(
+				"SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments WHERE id = ? LIMIT 1",
+				new Object[] { id }, simpleMapper);
+
+		if (queryResult.isEmpty()) {
 			return null;
 		}
-		
+
 		return queryResult.get(0);
 	}
-	
+
 	public void delete(int id) {
-		jdbcTemplate.update("DELETE FROM appointments WHERE id = ?",
-				new Object[] {id});
+		jdbcTemplate.update("DELETE FROM appointments WHERE id = ?", new Object[] { id });
 	}
 
 	public Appointment save(Appointment appointment) {
 		Integer id = appointment.getId();
-		if(id == null) {
+		if (id == null) {
 
 			KeyHolder holder = new GeneratedKeyHolder();
 
@@ -123,7 +118,8 @@ public class AppointmentDao {
 
 				@Override
 				public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-					PreparedStatement statement = con.prepareStatement("INSERT INTO appointments(client_id, pet_id, appt_time, appt_date, appt_type) VALUES (?, ?, ?, ?, ?)");
+					PreparedStatement statement = con.prepareStatement(
+							"INSERT INTO appointments(client_id, pet_id, appt_time, appt_date, appt_type) VALUES (?, ?, ?, ?, ?)");
 					statement.setInt(1, appointment.getClient_id());
 					statement.setInt(2, appointment.getPet_id());
 					statement.setString(3, appointment.getAppt_time());
@@ -137,21 +133,21 @@ public class AppointmentDao {
 			id = holder.getKey().intValue();
 
 		} else {
-			jdbcTemplate.update("UPDATE appointments SET client_id = ?, pet_id= ? , appt_time = ? , appt_date = ? , appt_type = ? WHERE id = ?",
-					new Object[] {appointment.getClient_id(), appointment.getPet_id(), appointment.getAppt_time(), appointment.getAppt_date(), appointment.getAppt_type(), id});
+			jdbcTemplate.update(
+					"UPDATE appointments SET client_id = ?, pet_id= ? , appt_time = ? , appt_date = ? , appt_type = ? WHERE id = ?",
+					new Object[] { appointment.getClient_id(), appointment.getPet_id(), appointment.getAppt_time(),
+							appointment.getAppt_date(), appointment.getAppt_type(), id });
 		}
 
 		return get(id);
 	}
-	
-	public List<Appointment> listForClient(int clientId){
+
+	public List<Appointment> listForClient(int clientId) {
 		List<Appointment> queryResult = jdbcTemplate.query(
 				"SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments WHERE client_id = ?",
-				new Object[] {clientId},
-				simpleMapper);
+				new Object[] { clientId }, simpleMapper);
 
 		return queryResult;
 	}
 
-	
 }
