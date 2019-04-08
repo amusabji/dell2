@@ -5,9 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,14 +17,12 @@ import org.springframework.stereotype.Repository;
 import springapp.domain.Client;
 
 /**
- * This is the client dao that is responsible for managing the clients info in the databsae.
+ * This is the client dao that is responsible for managing the clients info in the database.
  * The dao acts as the 'gatekeeper' between the rest of the code and the database
  */
 @Repository
 @Scope("singleton")
 public class ClientDao {
-	private Logger logger = LoggerFactory.getLogger(ClientDao.class);
-
 	RowMapper<Client> simpleMapper = new RowMapper<Client>() {
 
 		@Override
@@ -97,6 +92,9 @@ public class ClientDao {
 		
 		
 		jdbcTemplate.update("DELETE FROM clients WHERE id = ?",
+				new Object[] {id});
+		
+		jdbcTemplate.update("DELETE FROM appointments WHERE client_id = ?",
 				new Object[] {id});
 		
 	}

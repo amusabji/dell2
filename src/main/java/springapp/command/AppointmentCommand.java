@@ -1,7 +1,6 @@
 package springapp.command;
 
 import springapp.domain.Appointment;
-import springapp.domain.Client;
 
 /**
  * This command class is used to pass information back and force between the

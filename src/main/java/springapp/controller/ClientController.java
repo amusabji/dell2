@@ -60,7 +60,8 @@ public class ClientController {
         // template for both creating a new client and editing and existing client
 	    if(id.equals("new")) {
 	        // create an empty command object to merge with the view template
-			model.addAttribute("command", new ClientCommand(null));	
+			model.addAttribute("command", new ClientCommand(null));
+			model.addAttribute("pets", clientService.getPets(-1));
 		} else {
 	        // since we have a valid id, get the client object from the service
 			Client client = clientService.getClient(id);

@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,14 +18,12 @@ import org.springframework.stereotype.Repository;
 import springapp.domain.Appointment;
 /**
  * This is the client dao that is responsible for managing the clients info in
- * the databsae. The dao acts as the 'gatekeeper' between the rest of the code
+ * the database. The dao acts as the 'gatekeeper' between the rest of the code
  * and the database
  */
 @Repository
 @Scope("singleton")
 public class AppointmentDao {
-	private Logger logger = LoggerFactory.getLogger(AppointmentDao.class);
-
 	RowMapper<Appointment> simpleMapper = new RowMapper<Appointment>() {
 
 		@Override
