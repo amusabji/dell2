@@ -1,8 +1,8 @@
     <!-- Sidebar -->
-    <ul data-th-fragment="sidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul data-th-fragment="sidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" sec:authorize="isAuthenticated()">
 
         <!-- Sidebar - Brand -->
-         <a class="sidebar-brand d-flex justify-content-center align-content-center" href="#" data-th-href="@{'/'}">
+         <a class="sidebar-brand d-flex justify-content-center align-content-center mb-3" href="#" data-th-href="@{'/'}">
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fa fa-paw"></i>
           </div>
@@ -51,5 +51,30 @@
           <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
 
-      </ul>
-      <!-- End of Sidebar -->
+	</ul>
+    <!-- End of Sidebar -->
+    
+    <ul data-th-fragment="sidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" sec:authorize="isAnonymous()">
+    	<!-- Sidebar - Brand -->
+         <a class="sidebar-brand d-flex justify-content-center align-content-center mb-3" href="#" data-th-href="@{'/'}">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fa fa-paw"></i>
+          </div>
+          <div class="sidebar-brand-text">Pet App</div>
+        </a>
+        
+         <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-th-href="@{'/'}">
+           <i class="fas fa-home fa-lg"></i>
+            <span>Home</span></a>
+        </li>
+        
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-th-href="@{'/login'}">
+           <i class="fas fa-sign-in-alt fa-lg"></i>
+            <span>Sign In</span></a>
+        </li>
+    
+    </ul>

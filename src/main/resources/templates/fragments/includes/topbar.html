@@ -44,12 +44,20 @@
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span data-th-href="@{/clients}"  class="mr-2 d-none d-lg-inline text-gray-600 small">username TODO</span>
+              <a class="nav-link dropdown-toggle" href="#"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAnonymous()">
+                <span data-th-href="@{/clients}"  class="mr-2 d-none d-lg-inline text-gray-600 small">GUEST</span>
                  <!-- <span data-th-text="${command.client.name}"> client </span> -->
                 
                 <i class="fas fa-user-circle fa-2x"></i>
               </a>
+              
+              <a class="nav-link dropdown-toggle" href="#"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" sec:authorize="isAuthenticated()">
+                <span data-th-href="@{/clients}"  class="mr-2 d-none d-lg-inline text-gray-600 small">ADMIN</span>
+                 <!-- <span data-th-text="${command.client.name}"> client </span> -->
+                
+                <i class="fas fa-user-circle fa-2x"></i>
+              </a>
+              
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" href="#">
