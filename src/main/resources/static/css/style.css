@@ -105,7 +105,7 @@ body {
 }
 
 .sidebar #sidebarToggle::after {
-	color: #9e7cc1 !important;
+	color: #888091 !important;
 }
 
 .shadow {
@@ -141,9 +141,18 @@ body {
 }
 
 .container-welcome {
-	font-size: 3.8em;
 	text-align: center;
 	font-family: Trebuchet MS, sans-serif;
+	background-color: white;
+	width: 50%;
+	height:60%;
+	border: 5px solid #d1e0fe;;
+	margin:5%;
+	padding:15px;
+}
+
+.container-welcome h4{
+	color:#d1e0fe;
 }
 
 .container-fluid {
@@ -155,7 +164,7 @@ body {
 
 .container-pictures {
 	height: 50%;
-	width: 40%;
+	width: 60%;
 	display:block;
 	margin-left: auto;
   	margin-right: auto;

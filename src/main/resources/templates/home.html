@@ -1,15 +1,17 @@
 <header th:replace="fragments/includes/1-top-template.html"></header>
+<style>
+	#content{
+		background-image: url("/images/grid.jpg");
+		background-size:cover;
+</style>
+<center>
 <div class="container-welcome">
-  All Pets Vet Care
-  
-  <h2> Admin Site </h2> 
-  </div>
-<div class="container-fluid">
+  <h2 mt-5>All Pets Vet Care</h2>
+  <h4 mt-4> Admin Site </h4>
 
 <!-- Main Content --------------------------------------->
-
+<div class="container-fluid">
   <br>
-  
 	<div class="container-pictures">
 		<div id="carouselExampleSlidesOnly" class="center"
 			data-ride="carousel">
@@ -43,6 +45,7 @@
 
 <!-- end ------------------------------------------------->
 </div>
-
+</div>
+</center>
 <footer th:replace="fragments/includes/2-bottom-template.html"></footer>
 <!-- add additional scripts below -->
