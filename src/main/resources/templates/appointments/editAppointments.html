@@ -18,13 +18,13 @@
      <h4> Appointment Details </h4>
     <div class="form-row">
     	<div class="form-group col-md-4">
-    		<label class="small mb-0" for="name">Client ID</label>
-    		<input name="client_id" type="text" class="form-control" data-th-field="*{client_id}" readonly>
+    		<label class="small mb-0" for="name" >Client Name</label>
+    		<input name="client_name" data-th-value="${client_name}" type="text" class="form-control" readonly>
     	</div>
     	
     	<div class="form-group col-md-4">
-    		<label class="small mb-0" for="pet_id">Pet ID</label>
-    		<input name="pet_id" type="text" class="form-control" data-th-field="*{pet_id}" readonly>
+    		<label class="small mb-0" for="pet_id">Pet Name</label>
+    		<input name="pet_name" data-th-value="${pet_name}" type="text" class="form-control" readonly>
     	</div>	
     </div>
     

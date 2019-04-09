@@ -16,6 +16,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import springapp.domain.Appointment;
+import springapp.domain.AppointmentClientPet;;
+
 /**
  * This is the client dao that is responsible for managing the clients info in
  * the database. The dao acts as the 'gatekeeper' between the rest of the code
@@ -33,6 +35,21 @@ public class AppointmentDao {
 		}
 	};
 
+	RowMapper<AppointmentClientPet> simpleAppointmentClientPetMapper = new RowMapper<AppointmentClientPet>() {
+
+		@Override
+		public AppointmentClientPet mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+			String client_name = rs.getString("client_name");
+			String pet_name = rs.getString("pet_name");
+			Appointment appt = new Appointment(rs.getInt("id"), rs.getInt("client_id"), rs.getInt("pet_id"),
+					rs.getString("appt_time"), rs.getString("appt_date"), rs.getString("appt_type"));
+
+
+			return new AppointmentClientPet(appt, client_name, pet_name);
+		}
+	};
+
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
@@ -41,6 +58,27 @@ public class AppointmentDao {
 				.query("SELECT id, client_id, pet_id, appt_time, appt_date, appt_type FROM appointments", simpleMapper);
 
 		return queryResult;
+	}
+	
+	public List<AppointmentClientPet> getApptClientPetList() {
+		List<AppointmentClientPet> queryResult = jdbcTemplate.query(
+				"SELECT appt.*, c.name AS client_name, appt.pet_id, p.name AS pet_name "
+						+ "FROM appointments appt " + "LEFT JOIN clients c ON appt.client_id = c.id "
+						+ "LEFT JOIN pets p ON appt.pet_id = p.id", simpleAppointmentClientPetMapper);
+
+		return queryResult;
+	}
+	
+	public AppointmentClientPet getApptClientPet(String id) {
+		List<AppointmentClientPet> queryResult = jdbcTemplate.query(
+				"SELECT appt.*, c.name AS client_name, appt.pet_id, p.name AS pet_name "
+						+ "FROM appointments appt " + "LEFT JOIN clients c ON appt.client_id = c.id "
+						+ "LEFT JOIN pets p ON appt.pet_id = p.id WHERE appt.id = ? ", new Object[] {id}, simpleAppointmentClientPetMapper);
+
+		if(queryResult.isEmpty())
+			return null;
+		
+		return queryResult.get(0);
 	}
 	
 	public Appointment get(int id) {

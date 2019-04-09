@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import springapp.command.AppointmentCommand;
 import springapp.domain.Appointment;
+import springapp.domain.AppointmentClientPet;
 import springapp.service.AppointmentService;
 import springapp.service.PetService;
 
@@ -36,8 +37,8 @@ public class AppointmentController {
 	@PreAuthorize("hasAuthority('LIST_CLIENTS')")
 	@GetMapping
 	public String listAppointments(Model model) {
-		List<Appointment> appointments = appointmentService.getAppointments();
-		model.addAttribute("appointments", appointments);
+		List<AppointmentClientPet> apptClientPetList = appointmentService.getApptClientPetList();
+		model.addAttribute("apptClientPetList", apptClientPetList);
 		return "appointments/listAppointments";
 	}
 	
@@ -54,6 +55,10 @@ public class AppointmentController {
 			Appointment appointment = appointmentService.getAppointment(Integer.parseInt(id));
 			// we create a client command that can be used when the browser sends the save object
 			model.addAttribute("command", new AppointmentCommand(appointment));
+			
+			AppointmentClientPet apptClientPet = appointmentService.getApptClientPet(id);
+			model.addAttribute("client_name", apptClientPet.getClient_name());
+			model.addAttribute("pet_name", apptClientPet.getPet_name());
 		}
 		return "appointments/editAppointments";
 	}
