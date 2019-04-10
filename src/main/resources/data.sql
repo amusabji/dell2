@@ -1,3 +1,5 @@
+insert into users values (null, 'admin', 'password', 'SUPER_ADMIN');
+
 -- test data
 -- generated at: https://www.generatedata.com/
 INSERT INTO clients(id,name,phone_number,address)
