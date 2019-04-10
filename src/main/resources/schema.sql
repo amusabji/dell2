@@ -32,5 +32,3 @@ create table appointments (
 	FOREIGN KEY (client_id) REFERENCES clients(id),
 	FOREIGN KEY (pet_id) REFERENCES pets(id)
 );
-
-insert into users values (null, 'admin', 'password', 'SUPER_ADMIN');
