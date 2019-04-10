@@ -50,7 +50,7 @@
 
   <!-- ADD NEW PET --------->
   <div class="collapse" id="collapseAddNewPet">
-    <div class="card card-body mb-2 col border-1 bg-transparent p-2">
+    <div class="card card-body mb-4 col border-1 bg-transparent p-2">
       <h4 class="text-muted font-weight-light mx-2">new pet</h4>
 
       <form class="needs-validation" id="petForm" action="#" data-th-action="@{/pets}" method="post">
@@ -90,37 +90,33 @@
 
     <!-- ADD/EDIT APPOINTMENT --------->
     <div class="collapse" id="collapseAddNewAppointment">
-		<div class="card card-body mb-2 col border-1 bg-transparent p-2">
+		<div class="card card-body mb-2 col border-1 p-2 theme-col opacity-50 small">
       		<h4 class="text-muted font-weight-light mx-2">new appointment</h4>
 
 	      <form class="needs-validation" id="appointmentForm" action="#" data-th-action="@{/appointments}" method="post">
 			<div class="form-row mx-1">
-				<div class="form-group col-md-4">
-	    			<label class="small mb-0" for="name">Client ID</label>
-	    			<input name="client_id" type="text" class="form-control" data-th-value="${command.id}" readonly>
-	    		</div>
-	    		
-				<div class="form-group col-md-4">
+
+	    		<input name="client_id" type="hidden" data-th-value="${command.id}">
+				<div class="form-group col-12 ">
 				   <label class="small mb-0" for="pet_id">Pet</label>
 				   <select id="pet_id" name="pet_id" class="form-control">
 				    <option data-th-each="pet, rowStat : ${pets}" data-th-value="${pet.id}" data-th-text="${pet.name}"></option>
 				  </select>
 				</div>	
-    		</div>
-    		
-	       <div class="form-row mx-1">
-		      <div class="form-group col-md-4 was-validated">
-		        <label class="small mb-0" for="name">Appointment Date</label>
-		        <input id="appt_date" name="appt_date" placeholder="Appointment Date (MM/DD/YYYY)" type="text" class="form-control js-format-date" required>
+   
+		      <div class="form-group col-7 col-md-4 was-validated">
+		        <label class="small mb-0" for="name">Date</label>
+		        <input id="appt_date" name="appt_date" placeholder="Appointment Date (MM/DD/YYYY)" class="form-control js-format-date" type="date" required>
 		      </div>
 		
-		      <div class="form-group col-md-4">
-		        <label class="small mb-0" for="appt_time">Appointment Time</label>
-		        <input id="appt_time" name="appt_time" placeholder="Appointment Time (HH:MM)" type="text" class="form-control js-format-time" required>
+		      <div class="form-group col-5 col-md-4">
+		        <label class="small mb-0" for="appt_time">Time</label>
+            <input id="appt_time" name="appt_time" type="time" min="9:00" max="18:00" class="form-control" required>
+            <span class="validity"></span>
 		      </div>
 		    
-		      <div class="form-group col-md-4">
-		        <label class="small mb-0" for="appt_type">Appointment Reason</label>
+		      <div class="form-group col-sm-12 col-md-4 col-sm-12 ">
+		        <label class="small mb-0" for="appt_type">Reason for visit</label>
 		        <input id="appt_type" name="appt_type" placeholder="Reason for Appointment" type="text" class="form-control text-capitalize" required>
 		      </div>
     		</div>
