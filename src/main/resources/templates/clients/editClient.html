@@ -1,10 +1,10 @@
 <header th:replace="fragments/includes/1-top-template.html"></header>
 <div class="container-fluid">
 
-<!-- Main Content --------------------------------------->
+  <!-- Main Content --------------------------------------->
 
   <!-- ADD/EDIT CLIENT --------->
-  
+
   <form class="needs-validation" id="theForm" action="#" data-th-action="@{/clients}" data-th-object="${command}" method="post">
     <input type="hidden" data-th-field="*{id}" />
     <div data-th-if="${saved}" class="message-box-info">
@@ -41,7 +41,7 @@
         add pet
       </a>
       <a class="btn btn-outline-secondary btn-sm custom-buttons" data-th-if="${pets.size() > 0}" data-toggle="collapse" href="#collapseAddNewAppointment" role="button" aria-expanded="false" aria-controls="collapseAddNewAppointment">
-        add new appointment
+        new appointment
       </a>
     </div>
   </div>
@@ -61,7 +61,7 @@
             <label class="small mb-0" for="name">name</label>
             <input id="name" name="name" placeholder="pet name" type="text" class="form-control form-control-sm text-capitalize" required>
           </div>
-          
+
           <div class="form-group col-2">
             <label for="gender" class="small mb-0">gender</label>
             <select id="gender" name="gender" class="form-control form-control-sm">
@@ -69,66 +69,66 @@
               <option value="Female">F</option>
             </select>
           </div>
-          
+
           <div class="form-check mt-4 ml-3">
             <input class="form-check-input" type="checkbox" id="altered" name="altered">
             <label class="form-check-label small" for="altered" id="altered" name="altered" type="checkbox">
               Altered
             </label>
           </div>
-          
+
         </div>
-        
-	      <div class="form-group">
-	        <button type="submit" form="petForm" class="btn btn-primary btn-sm mx-2" value="add">Add</button>
-	      </div>
-          
+
+        <div class="form-group">
+          <button type="submit" form="petForm" class="btn btn-primary btn-sm mx-2" value="add">Add</button>
+        </div>
+
       </form>
 
     </div>
   </div>
 
-    <!-- ADD/EDIT APPOINTMENT --------->
-    <div class="collapse" id="collapseAddNewAppointment">
-		<div class="card card-body mb-2 col border-1 p-2 theme-col opacity-50 small">
-      		<h4 class="text-muted font-weight-light mx-2">new appointment</h4>
+  <!-- ADD/EDIT APPOINTMENT --------->
+  <div class="collapse" id="collapseAddNewAppointment">
+    <div class="card card-body mb-2 col border-1 p-2 theme-col opacity-50 small">
+      <h4 class="text-muted font-weight-light mx-2">new appointment</h4>
 
-	      <form class="needs-validation" id="appointmentForm" action="#" data-th-action="@{/appointments}" method="post">
-			<div class="form-row mx-1">
+      <form class="needs-validation" id="appointmentForm" action="#" data-th-action="@{/appointments}" method="post">
+        <div class="form-row mx-1">
 
-	    		<input name="client_id" type="hidden" data-th-value="${command.id}">
-				<div class="form-group col-12 ">
-				   <label class="small mb-0" for="pet_id">Pet</label>
-				   <select id="pet_id" name="pet_id" class="form-control">
-				    <option data-th-each="pet, rowStat : ${pets}" data-th-value="${pet.id}" data-th-text="${pet.name}"></option>
-				  </select>
-				</div>	
-   
-		      <div class="form-group col-7 col-md-4 was-validated">
-		        <label class="small mb-0" for="name">Date</label>
-		        <input id="appt_date" name="appt_date" placeholder="Appointment Date (MM/DD/YYYY)" class="form-control js-format-date" type="date" required>
-		      </div>
-		
-		      <div class="form-group col-5 col-md-4">
-		        <label class="small mb-0" for="appt_time">Time</label>
+          <input name="client_id" type="hidden" data-th-value="${command.id}">
+          <div class="form-group col-12 ">
+            <label class="small mb-0" for="pet_id">Pet</label>
+            <select id="pet_id" name="pet_id" class="form-control">
+              <option data-th-each="pet, rowStat : ${pets}" data-th-value="${pet.id}" data-th-text="${pet.name}"></option>
+            </select>
+          </div>
+
+          <div class="form-group col-7 col-md-4 was-validated">
+            <label class="small mb-0" for="name">Date</label>
+            <input id="appt_date" name="appt_date" placeholder="Appointment Date (MM/DD/YYYY)" class="form-control js-format-date" type="date" required>
+          </div>
+
+          <div class="form-group col-5 col-md-4">
+            <label class="small mb-0" for="appt_time">Time</label>
             <input id="appt_time" name="appt_time" type="time" min="9:00" max="18:00" class="form-control" required>
             <span class="validity"></span>
-		      </div>
-		    
-		      <div class="form-group col-sm-12 col-md-4 col-sm-12 ">
-		        <label class="small mb-0" for="appt_type">Reason for visit</label>
-		        <input id="appt_type" name="appt_type" placeholder="Reason for Appointment" type="text" class="form-control text-capitalize" required>
-		      </div>
-    		</div>
-	      	
-	      <div class="form-group">
-            <button type="submit" form="appointmentForm" class="btn btn-primary btn-sm mx-2" value="add">Add</button>
           </div>
-	        
-	     </form>
 
-    	</div>  
+          <div class="form-group col-sm-12 col-md-4 col-sm-12 ">
+            <label class="small mb-0" for="appt_type">Reason for visit</label>
+            <input id="appt_type" name="appt_type" placeholder="Reason for Appointment" type="text" class="form-control text-capitalize" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" form="appointmentForm" class="btn btn-primary btn-sm mx-2" value="add">Add</button>
+        </div>
+
+      </form>
+
     </div>
+  </div>
 
 
   <div class="mt-4" data-th-if="${command.id != null}">
@@ -155,21 +155,27 @@
                 <input name="clientId" type="hidden" data-th-value="${command.id}">
 
                 <div class="form-row p-0 mb-0 was-validated">
-                  <div class=" form-group col-12 mb-0">
+                  <div class=" form-group col-4 col-md-10 col-lg-12 mb-0">
                     <label class="sr-only small mb-0">name</label>
-                    <span class="small">id: <a data-th-href="@{/pets/{pid}?clientId={cid}(pid=${pet.id}, cid=${command.id})}" data-th-text="${pet.id}" class="text-body">...</a></span>
+                    <span class="small"><a data-th-href="@{/pets/{pid}?clientId={cid}(pid=${pet.id}, cid=${command.id})}" data-th-text="${pet.id}" class="text-body">...</a></span>
                     <input type="text" name="name" data-th-value="${pet.name}" class="form-control form-control-sm" required>
                   </div>
-                </div>
 
-                <div class="form-row p-0 mb-0 was-validated">
-                  <div class="form-group col-6 mb-0">
-                    <label class="small mb-0">gender</label>
-                    <input type="text" name="gender" data-th-value="${pet.gender}" class="form-control form-control-sm">
+                  <div class="form-group col-4 col-md-6 mb-0">
+                    <label for="gender" class="small mb-0">gender</label>
+                    <select id="gender" name="gender" class="form-control form-control-sm">
+                      <option th:value="${pet.gender}" th:text="${#strings.substring(pet.gender,0,1)}"></option>
+                          <option th:value="'Female'" th:text="F" th:if="${{pet.gender}}=='Male'"></option>
+                          <option th:value="'Male'" th:text="M" th:if="${{pet.gender}}=='Female'"></option>
+                      </select>
                   </div>
-                  <div class="form-group col-6 mb-0">
-                    <label class="small mb-0">altered</label>
-                    <input type="text" name="altered" data-th-value="${pet.altered}" class="form-control form-control-sm">
+                  <div class="form-group col-4 col-md-6 mb-0">
+                      <label class="small mb-0">altered</label>
+                      <select id="altered" name="altered" class="form-control form-control-sm">
+                          <option th:value="${pet.altered}"  th:text="${{pet.altered}}"></option>
+                          <option th:value="'true'" th:text="true" th:if="${{pet.altered}}=='false'"></option>
+                          <option th:value="'false'" th:text="false" th:if="${{pet.altered}}=='true'"></option>
+                      </select>
                   </div>
                 </div>
 

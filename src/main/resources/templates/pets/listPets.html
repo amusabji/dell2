@@ -1,36 +1,36 @@
 <header th:replace="fragments/includes/1-top-template.html"></header>
 <div class="container-fluid">
 
-<!-- Main Content --------------------------------------->
+	<!-- Main Content --------------------------------------->
 
-          <h3 class="mb-3">Pets</h3>
-          <div data-th-if="${deleted}" class="message-box-info">
-            Deleted successfully
-          </div>
-          <div class="table-responsive">
-              <table class="table table-sm">
-			      <thead>
-			        <tr>
-			          <th>Pet ID </th>
-			          <th>Name</th>
-			          <th>Gender</th>
-			          <th>Altered Status</th>
-			          <th>Client</th>
-			        </tr>
-			      </thead>
-			      <tbody>
-			        <tr data-th-each="pet : ${pets}">
-			          		<td data-th-text="${pet.id}">...</td>
-							<td data-th-text="${pet.name}">...</td>
-							<td data-th-text="${pet.gender}">...</td>
-							<td data-th-text="${pet.altered}">...</td>
-							<td data-th-text="${pet.clientId}">...</td>
-			        </tr>
-			      </tbody>
-			   </table>
-          </div>
-          
-<!-- end ------------------------------------------------->        
+	<h3 class="mb-3 mt-3">Pets</h3>
+	<div data-th-if="${deleted}" class="message-box-info">
+		Deleted successfully
+	</div>
+	<div class="table-responsive mb-5 mt-2">
+		<table class="table table-sm">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Gender</th>
+					<th>Altered</th>
+					<th>Client</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-th-each="pet : ${pets}">
+					<td data-th-text="${pet.id}">...</td>
+					<td data-th-text="${pet.name}">...</td>
+					<td data-th-text="${pet.gender}">...</td>
+					<td data-th-text="${pet.altered}">...</td>
+					<td data-th-text="${pet.client.name}">...</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<!-- end ------------------------------------------------->
 </div>
 
 <footer th:replace="fragments/includes/2-bottom-template.html"></footer>

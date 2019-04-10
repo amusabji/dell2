@@ -2,20 +2,20 @@
 <div class="container-fluid">
 
 <!-- Main Content --------------------------------------->
-		<div class="d-flex justify-content-between">
+		<div class="d-flex justify-content-between mt-2">
           <h3 class="mb-3">Clients</h3>
           <a class="btn btn-primary btn-sm custom-buttons" data-th-href="@{'/clients/new'}">Add New Client</a>
         </div>
           <div data-th-if="${deleted}" class="message-box-info">
             Deleted successfully
           </div>
-          <div class="table-responsive">
+          <div class="table-responsive mb-5">
               <table class="table table-sm">
             <thead>
               <tr class="bg-white">
-                <th>Client ID</th>
+                <th>ID</th>
                 <th>Name</th>
-                <th>Phone Number</th>
+                <th>Phone#</th>
                 <th>Address</th>
               </tr>
             </thead>

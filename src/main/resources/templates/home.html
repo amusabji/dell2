@@ -1,8 +1,16 @@
 <header th:replace="fragments/includes/1-top-template.html"></header>
+
+<style>
+		#wrapper #content-wrapper {
+		overflow:hidden
+		}
+	</style>
+
 <center>
 <div class="container-welcome">
-  <h2 mt-5>All Pets Vet Care</h2>
-  <h4 mt-4> Admin Site </h4>
+
+  <h2 class="mt-5">All Pets Vet Care</h2>
+  <h4 class="mt-4 text-black-50"> Admin Site </h4>
 
 <!-- Main Content --------------------------------------->
 <div class="container-fluid">
@@ -39,8 +47,9 @@
 	</div>
 
 <!-- end ------------------------------------------------->
-</div>
-</div>
 </center>
+</div>
+</div>
+
 <footer th:replace="fragments/includes/2-bottom-template.html"></footer>
 <!-- add additional scripts below -->
