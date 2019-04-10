@@ -2,7 +2,8 @@ create table clients (
 	id integer PRIMARY KEY AUTOINCREMENT,
 	name varchar(255),
 	phone_number varchar(255),
-	address varchar(255)
+	address varchar(255),
+	UNIQUE(name,phone_number)
 );
 
 create table pets (
