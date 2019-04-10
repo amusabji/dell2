@@ -28,28 +28,26 @@ public class SecurityDao {
 			return new User(rs.getInt("id"), rs.getString("username"), rs.getString("encoded_password"), role);
 		}
 	};
-	
-    @Autowired
-    JdbcTemplate jdbcTemplate;    	
+
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
 	public User getUserByUsername(String username) {
 		logger.debug("in getUserByUsername({})", username);
-		List<User> queryResult = jdbcTemplate.query("SELECT id, username, encoded_password, role FROM users WHERE username = ?", 
-				new Object[] {username},
+		List<User> queryResult = jdbcTemplate.query(
+				"SELECT id, username, encoded_password, role FROM users WHERE username = ?", new Object[] { username },
 				simpleUserMapper);
-		
-		if(queryResult.isEmpty()) {
+
+		if (queryResult.isEmpty()) {
 			return null;
 		}
-		
-		if(queryResult.size() > 1) {
-			throw new IllegalStateException("Found more than one user matching the username "+username);
+
+		if (queryResult.size() > 1) {
+			throw new IllegalStateException("Found more than one user matching the username " + username);
 		}
-		
+
 		return queryResult.get(0);
-		
-		
+
 	}
 
-	
-	
 }
