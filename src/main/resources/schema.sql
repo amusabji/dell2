@@ -1,11 +1,14 @@
-create table clients (
+create table IF NOT EXISTS clients (
 	id integer PRIMARY KEY AUTOINCREMENT,
-	name varchar(255),
+	name varchar(255) UNIQUE,
 	phone_number varchar(255),
 	address varchar(255)
 );
 
-create table pets (
+ALTER TABLE clients
+ADD CONSTRAINT unique_constraint_name_address_phonenumber UNIQUE(name, address, phone_name);
+ 
+create table IF NOT EXISTS pets (
 	id integer PRIMARY KEY AUTOINCREMENT,
 	name varchar(255),
 	gender varchar(255),
@@ -14,14 +17,17 @@ create table pets (
 	FOREIGN KEY (client_id) REFERENCES clients(id)
 );
 
-create table users (
+ALTER TABLE pets
+ADD CONSTRAINT unique_constraint_petname_clientid UNIQUE(name, client_id);
+ 
+create table IF NOT EXISTS users (
 	id integer PRIMARY KEY AUTOINCREMENT,
 	username varchar(255) UNIQUE,
 	encoded_password varchar(255),
 	role varchar(255)
 );
 
-create table appointments (
+create table IF NOT EXISTS appointments (
 	id integer PRIMARY KEY AUTOINCREMENT,
 	client_id integer,
 	pet_id integer,

@@ -1,8 +1,10 @@
-insert into users values (null, 'admin', 'password', 'SUPER_ADMIN');
+
+insert or ignore into users values (null, 'admin', 'password', 'SUPER_ADMIN');
+
 
 -- test data
 -- generated at: https://www.generatedata.com/
-INSERT INTO clients(id,name,phone_number,address)
+insert or ignore into clients( id, name, phone_number, address)
 VALUES
   (NULL, "Cole", "3944685477", "2105 Magna. St."),
   (NULL, "Griffin", "5139812377", "P.O. Box 253, 6056 Quisque Avenue"),
@@ -105,8 +107,8 @@ VALUES
   (NULL, "Murphy", "8229213259", "P.O. Box 356, 7470 Nunc St."),
   (NULL, "Bryar", "6466519424", "722-6078 Lectus Rd.");
 
- INSERT INTO pets
-  (id,name,gender,altered,client_id)
+
+insert or ignore into  pets(name, gender, altered, client_id)
 VALUES
   (NULL, "Gum Drop", "Female", 0, 11),
   (NULL, "Honey Bun", "Male", 0, 8),
